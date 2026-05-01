@@ -1,0 +1,7 @@
+# Ignore the database and logs
+*.db
+*.log
+
+# Ignore the actual uploaded files
+files/
+
