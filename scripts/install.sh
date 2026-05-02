@@ -3,15 +3,22 @@
 
 echo "Starting AetherVault Environment Setup..."
 
-# 1. Create Directory Structure
-mkdir -p ~/AetherVault/files
-mkdir -p ~/AetherVault/database
-mkdir -p ~/AetherVault/bin
+# 1. Get the directory where THIS script is located
+# This makes the project work regardless of the folder name
+PROJECT_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 
-# 2. Download FileBrowser Binary
+echo "Installing to: $PROJECT_ROOT"
+
+# 2. Create Directory Structure relative to the project root
+mkdir -p "$PROJECT_ROOT/files"
+mkdir -p "$PROJECT_ROOT/database"
+mkdir -p "$PROJECT_ROOT/bin"
+
+# 3. Download FileBrowser Binary
 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
 
-# 3. Move binary to project folder for portability
-sudo mv /usr/local/bin/filebrowser ~/AetherVault/bin/
+# 4. Move binary to the project's bin folder
+# We use sudo because the curl script puts it in /usr/local/bin by default
+sudo mv /usr/local/bin/filebrowser "$PROJECT_ROOT/bin/"
 
-echo " Directories created and binary installed in ~/AetherVault/bin/"
+echo "Directories created and binary installed in $PROJECT_ROOT/bin/"
