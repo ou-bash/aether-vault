@@ -6,8 +6,9 @@ After=network.target tailscaled.service
 User=anumoymajhi
 Group=anumoymajhi
 Type=simple
-WorkingDirectory=/home/anumoymajhi/AetherVault
-ExecStart=/home/anumoymajhi/AetherVault/bin/filebrowser -d /home/anumoymajhi/AetherVault/database/aether.db
+WorkingDirectory=/home/anumoymajhi/project/project-ssh-cloud/aether-vault
+ExecStart=/home/anumoymajhi/project/project-ssh-cloud/aether-vault/bin/filebrowser -d /home/anumoymajhi/project/project-ssh-cloud/aether-vault/database/aether.db
+EnvironmentFile=/home/anumoymajhi/project/project-ssh-cloud/aether-vault/.env
 Restart=always
 RestartSec=3
 

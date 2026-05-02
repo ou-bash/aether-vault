@@ -1,7 +1,11 @@
-# Ignore the database and logs
-*.db
+# --- Secrets & Config ---
+.env
+database/
 *.log
 
-# Ignore the actual uploaded files
-files/
+# --- Local Generated Files (The stuff with your personal paths) ---
+systemd/aether.service
 
+# --- Binaries & Data ---
+bin/
+files/
