@@ -1,6 +1,6 @@
-# AetherVault
+# aether-vault
 
-**AetherVault** is a high-performance, self-hosted private cloud bridge. It transforms local Linux hardware into a globally accessible, encrypted storage vault using a secure WireGuard-based mesh network.
+**aether-vault** is a high-performance, self-hosted private cloud bridge. It transforms local Linux hardware into a globally accessible, encrypted storage vault using a secure WireGuard-based mesh network.
 
 ---
 
@@ -23,8 +23,8 @@
 ### 1. Provision the Environment
 Clone the repository and prepare the secrets file:
 ```bash
-git clone https://github.com/YOUR_USER/AetherVault.git
-cd AetherVault
+git clone https://github.com/YOUR_USER/aether-vault.git
+cd aether-vault
 cp .env.example .env
 ```
 *Note: Edit `.env` to set your custom `VAULT_ADMIN_USER`, `VAULT_ADMIN_PASSWORD`, and `VAULT_PORT`.*
@@ -67,7 +67,7 @@ sudo tcpdump -i tailscale0 port 8080
 
 ## Project Structure
 ```text
-AetherVault/
+aether-vault/
 ├── bin/              # Binary executables (Git ignored)
 ├── database/         # SQLite configuration data (Git ignored)
 ├── files/            # Your cloud storage directory (Git ignored)
