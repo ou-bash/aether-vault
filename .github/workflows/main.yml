@@ -1,0 +1,42 @@
+name: AetherVault CI Pipeline
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  # Job 1: Check the quality of Shell scripts
+  lint-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        run: |
+          # Testing core automation scripts for bugs
+          shellcheck scripts/backup.sh
+          shellcheck scripts/install.sh
+          shellcheck scripts/setup_db.sh
+
+  # Job 2: Verify the Docker configuration
+  verify-docker:
+    needs: lint-scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose
+        run: |
+          # This checks for syntax errors in your compose file 
+          # without actually starting the containers
+          docker compose config
+
+      - name: Build Test Image
+        run: |
+          # Ensures the Dockerfile (if you have one) or the 
+          # compose images pull correctly
+          docker compose build
