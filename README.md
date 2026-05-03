@@ -51,9 +51,9 @@ sudo tcpdump -i tailscale0 port 8080
 ```
 
 ## Key Features
-*   **Docker-Native**: Deploy in seconds on any system with Docker installed—no local library conflicts.
+*   **Docker-Native**: Deploy in seconds on any system with Docker installed --- no local library conflicts.
 *   **Environment Agnostic**: Uses `.env` and `sed`-based templating to adapt to any directory structure.
-*   **Global Mesh Access**: Bypasses NAT and Firewalls—access your files via Tailscale from anywhere.
+*   **Global Mesh Access**: Bypasses NAT and Firewalls --- access your files via Tailscale from anywhere.
 *   **Health Monitoring**: Docker-integrated health checks ensure the service is always responsive.
 *   **Auto-Persistence**: Service restarts automatically on boot or failure.
 
