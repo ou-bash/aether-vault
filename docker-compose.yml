@@ -1,46 +1,38 @@
-version: '3'
-services:
+name: aether-vault
 
+services:
   traefik:
     image: traefik:v3.0
     container_name: traefik-gateway
-    environment:
-      - DOCKER_HOST=unix:///var/run/docker.sock
+    security_opt:
+      - label:disable
     command:
-      - "--api.insecure=true" # Allows access to the Traefik dashboard
+      - "--api.insecure=true"
       - "--providers.docker=true"
-      - "--providers.docker.endpoint=unix:///var/run/docker.sock" # Explicit endpoint
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock?version=1.40"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
     ports:
-      - "80:80"     # HTTP traffic entry point
-      - "8081:8080" # Traefik Dashboard (so it doesn't conflict with old app port)
+      - "80:80"
+      - "8081:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro # Let Traefik "see" Docker events
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
 
   aethervault:
     image: filebrowser/filebrowser:latest
     container_name: aethervault-docker
-    user: "${UID:-1000}:${GID:-1000}" # Runs as YOU, not root
+    user: "${UID:-1000}:${GID:-1000}"
     env_file:
       - .env
+    ports:
+      - "8080:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.aether.rule=PathPrefix(`/`)" # Routes all traffic to AetherVault
+      - "traefik.http.routers.aether.rule=Host(`localhost`)"
       - "traefik.http.services.aether.loadbalancer.server.port=80"
     volumes:
       - ./files:/srv
       - ./database/filebrowser.db:/database/filebrowser.db
       - ./.env:/config/.env
     restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:80 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-
-networks:
-  default:
-    name: aether-network
