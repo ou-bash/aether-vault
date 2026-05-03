@@ -1,7 +1,6 @@
 # aether-vault
 
 aether-vault is a high-performance, self-hosted private cloud bridge. It transforms local Linux hardware into a globally accessible, encrypted storage vault using a secure WireGuard-based mesh network.
-<<<<<<< HEAD
 
 ## Architecture & Stack
 *   **Engine**: FileBrowser (High-concurrency Golang-based file manager)
