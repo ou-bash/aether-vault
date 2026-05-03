@@ -9,7 +9,7 @@ aether-vault is a high-performance, self-hosted private cloud bridge. It transfo
 *   **Legacy Orchestration**: Systemd (Native Linux background persistence)
 *   **Security**: Decoupled Secrets Management via `.env` and Environment Templating.
 
-##  Quick Start (Docker Deployment)
+##  Docker Deployment
 The fastest way to deploy AetherVault is using Docker. This ensures all dependencies and binaries are handled automatically.
 
 ### 1. Provision the Environment
@@ -60,17 +60,14 @@ sudo tcpdump -i tailscale0 port 8080
 ## Project Structure
 ```plaintext
 aether-vault/
-├── docker-compose.yml          # Main Docker orchestration file
-├── .env.example                # Secrets blueprint
-├── bin/                        # Manual binary executables (Git ignored)
-├── database/                   # SQLite configuration data (Git ignored)
-├── files/                      # Your cloud storage directory (Git ignored)
-├── scripts/
-│   ├── install.sh              # Manual install script
-│   ├── setup_db.sh             # Configurator & service generator
-│   └── backup.sh               # Automated backup utility
-├── systemd/
-│   ├── aether.service.template # Portable service definition
-│   └── aether.service          # Generated local service (Git ignored)
-└── README.md                   # Documentation
+├── config/             # Configuration templates and settings
+├── scripts/            # Automation and installation scripts
+│   ├── backup.sh       # Automated backup utility
+│   ├── install.sh      # Manual install script
+│   └── setup_db.sh     # Configurator and service generator
+├── systemd/            # Portable service definitions and templates
+├── .env.example        # Secrets blueprint for environment variables
+├── .gitignore          # Rules for excluding private data from Git
+├── README.md           # Project documentation and setup guide
+└── docker-compose.yml  # Main Docker orchestration file
 ```
