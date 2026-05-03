@@ -20,9 +20,19 @@ jobs:
       - name: Run ShellCheck
         run: |
           # Testing core automation scripts for bugs
-          shellcheck scripts/backup.sh
-          shellcheck scripts/install.sh
-          shellcheck scripts/setup_db.sh
+          # 2. UPDATE THIS ENTIRE STEP
+      - name: Run ShellCheck
+        run: |
+          # Ensure scripts exist and are executable before linting
+          chmod +x scripts/*.sh
+          for script in scripts/backup.sh scripts/install.sh scripts/setup_db.sh; do
+            if [ -f "$script" ]; then
+              shellcheck "$script"
+            else
+              echo "Error: $script not found!"
+              exit 1
+            fi
+          done
 
   # Job 2: Verify the Docker configuration
   verify-docker:
