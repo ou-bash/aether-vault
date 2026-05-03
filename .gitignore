@@ -1,11 +1,17 @@
-# --- Secrets & Config ---
+# Secrets
 .env
-database/
-*.log
 
-# --- Local Generated Files (The stuff with your personal paths) ---
+# Personal Data & Database
+database/
+files/
+
+# Binaries & Logs
+bin/
+*.log
+aether.log
+
+# System-specific service
 systemd/aether.service
 
-# --- Binaries & Data ---
-bin/
-files/
+# OS Junk
+.DS_Store
