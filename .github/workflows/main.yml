@@ -19,10 +19,6 @@ jobs:
 
       - name: Run ShellCheck
         run: |
-          # Testing core automation scripts for bugs
-          # 2. UPDATE THIS ENTIRE STEP
-      - name: Run ShellCheck
-        run: |
           # Ensure scripts exist and are executable before linting
           chmod +x scripts/*.sh
           for script in scripts/backup.sh scripts/install.sh scripts/setup_db.sh; do
@@ -44,9 +40,10 @@ jobs:
 
       - name: Create Dummy Files for CI
         run: |
-          # Create empty files so Docker Compose validation passes
           mkdir -p database files
           touch .env database/filebrowser.db
+          # Create a fake docker.sock so Traefik doesn't complain during validation
+          sudo touch /var/run/docker.sock
 
       - name: Validate Docker Compose
         run: |
