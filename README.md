@@ -60,15 +60,15 @@ sudo tcpdump -i tailscale0 port 8080
 ## Project Structure
 ```plaintext
 aether-vault/
-├── config/             # Configuration templates and settings
-├── scripts/            # Automation and installation scripts
-│   ├── backup.sh       # Automated backup utility
-│   ├── install.sh      # Manual install script
-│   └── setup_db.sh     # Configurator and service generator
-├── systemd             # Portable service definitions and templates
-│   └──        
-├── .env.example        # Secrets blueprint for environment variables
-├── .gitignore          # Rules for excluding private data from Git
-├── README.md           # Project documentation and setup guide
-└── docker-compose.yml  # Main Docker orchestration file
+├── config/                       # Configuration templates and settings
+├── scripts/                      # Automation and installation scripts
+│   ├── backup.sh                 # Automated backup utility
+│   ├── install.sh                # Manual install script
+│   └── setup_db.sh               # Configurator and service generator
+├── systemd                       # Portable service definitions and templates
+│   └── aether.service.template       
+├── .env.example                  # Secrets blueprint for environment variables
+├── .gitignore                    # Rules for excluding private data from Git
+├── README.md                     # Project documentation and setup guide
+└── docker-compose.yml            # Main Docker orchestration file
 ```
