@@ -42,6 +42,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Create Dummy Files for CI
+        run: |
+          # Create empty files so Docker Compose validation passes
+          mkdir -p database files
+          touch .env database/filebrowser.db
+
       - name: Validate Docker Compose
         run: |
           # This checks for syntax errors in your compose file 

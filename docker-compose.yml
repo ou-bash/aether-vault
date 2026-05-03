@@ -3,7 +3,7 @@ services:
   aethervault:
     image: filebrowser/filebrowser:latest
     container_name: aethervault-docker
-    user: "${UID}:${GID}" # Runs as YOU, not root
+    user: "${UID:-1000}:${GID:-1000}" # Runs as YOU, not root
     env_file:
       - .env
     ports:
