@@ -1,7 +1,10 @@
 # aether-vault
 
 aether-vault is a high-performance, self-hosted private cloud bridge. It transforms local Linux hardware into a globally accessible, encrypted storage vault using a secure WireGuard-based mesh network.
+<<<<<<< HEAD
 
+=======
+>>>>>>> cde06b1 (docs: add comprehensive README for AetherVault)
 
 ## Architecture & Stack
 *   **Engine**: FileBrowser (High-concurrency Golang-based file manager)
@@ -10,7 +13,7 @@ aether-vault is a high-performance, self-hosted private cloud bridge. It transfo
 *   **Legacy Orchestration**: Systemd (Native Linux background persistence)
 *   **Security**: Decoupled Secrets Management via `.env` and Environment Templating.
 
-## Quick Start (Docker Deployment)
+##  Quick Start (Docker Deployment)
 The fastest way to deploy AetherVault is using Docker. This ensures all dependencies and binaries are handled automatically.
 
 ### 1. Provision the Environment
@@ -58,6 +61,7 @@ sudo tcpdump -i tailscale0 port 8080
 *   **Health Monitoring**: Docker-integrated health checks ensure the service is always responsive.
 *   **Auto-Persistence**: Service restarts automatically on boot or failure.
 
+<<<<<<< HEAD
 ## Project Structure
 <<<<<<< HEAD
 ```text
@@ -66,6 +70,9 @@ aether-vault/
 ├── database/         # SQLite configuration data (Git ignored)
 ├── files/            # Your cloud storage directory (Git ignored)
 =======
+=======
+##  Project Structure
+>>>>>>> cde06b1 (docs: add comprehensive README for AetherVault)
 ```plaintext
 aether-vault/
 ├── docker-compose.yml          # Main Docker orchestration file
@@ -83,3 +90,4 @@ aether-vault/
 │   └── aether.service          # Generated local service (Git ignored)
 └── README.md                   # Documentation
 ```
+
