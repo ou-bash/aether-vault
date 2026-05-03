@@ -57,18 +57,7 @@ sudo tcpdump -i tailscale0 port 8080
 *   **Health Monitoring**: Docker-integrated health checks ensure the service is always responsive.
 *   **Auto-Persistence**: Service restarts automatically on boot or failure.
 
-<<<<<<< HEAD
 ## Project Structure
-<<<<<<< HEAD
-```text
-aether-vault/
-├── bin/              # Binary executables (Git ignored)
-├── database/         # SQLite configuration data (Git ignored)
-├── files/            # Your cloud storage directory (Git ignored)
-=======
-=======
-##  Project Structure
->>>>>>> cde06b1 (docs: add comprehensive README for AetherVault)
 ```plaintext
 aether-vault/
 ├── docker-compose.yml          # Main Docker orchestration file
@@ -76,7 +65,6 @@ aether-vault/
 ├── bin/                        # Manual binary executables (Git ignored)
 ├── database/                   # SQLite configuration data (Git ignored)
 ├── files/                      # Your cloud storage directory (Git ignored)
->>>>>>> 8bf7f5a (update README.md file)
 ├── scripts/
 │   ├── install.sh              # Manual install script
 │   ├── setup_db.sh             # Configurator & service generator
@@ -86,4 +74,3 @@ aether-vault/
 │   └── aether.service          # Generated local service (Git ignored)
 └── README.md                   # Documentation
 ```
-
