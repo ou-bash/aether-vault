@@ -65,7 +65,8 @@ aether-vault/
 │   ├── backup.sh       # Automated backup utility
 │   ├── install.sh      # Manual install script
 │   └── setup_db.sh     # Configurator and service generator
-├── systemd/            # Portable service definitions and templates
+├── systemd             # Portable service definitions and templates
+│   └──        
 ├── .env.example        # Secrets blueprint for environment variables
 ├── .gitignore          # Rules for excluding private data from Git
 ├── README.md           # Project documentation and setup guide
