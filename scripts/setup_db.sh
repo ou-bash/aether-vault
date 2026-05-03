@@ -5,7 +5,11 @@ PROJECT_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 
 # 1. Load variables from .env file
 if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
+    set -a
+    # shellcheck source=/dev/null
+    [ -f "$PROJECT_ROOT/.env" ] && . "$PROJECT_ROOT/.env"
+    set +a
+
 else
     echo "Error: .env file not found!"
     echo "Please copy .env.example to .env and fill in your credentials."
