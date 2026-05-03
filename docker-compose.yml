@@ -1,0 +1,21 @@
+version: '3'
+services:
+  aethervault:
+    image: filebrowser/filebrowser:latest
+    container_name: aethervault-docker
+    user: "${UID}:${GID}" # Runs as YOU, not root
+    env_file:
+      - .env
+    ports:
+      - "8080:80" # We'll use 8081 to avoid conflict with your systemd version
+    volumes:
+      - ./files:/srv
+      - ./database/filebrowser.db:/database/filebrowser.db
+      - ./.env:/config/.env
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
