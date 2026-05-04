@@ -47,6 +47,16 @@ sudo cp systemd/aether.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now aether
 ```
+## Network & Security Debugging
+To verify traffic is flowing securely through your encrypted Tailscale tunnel, you can monitor the internal interface:
+
+```bash
+# Monitor incoming cloud traffic specifically on the Tailscale interface
+sudo tcpdump -i tailscale0 port 8080
+```
+
+*This proves that requests are arriving via the private mesh network and not the public internet.*
+
 
 ##  Maintenance & Backups
 aether-vault includes a pre-configured backup utility. To automate daily snapshots at 2:00 AM, add the following to your `crontab -e`:
