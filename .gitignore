@@ -15,3 +15,9 @@ systemd/aether.service
 
 # OS Junk
 .DS_Store
+
+#services
+nginx/
+caddy_data/
+caddy_config/
+AetherVault_Backups/
