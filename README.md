@@ -83,3 +83,4 @@ aether-vault/
 
 ## Security & Mesh Networking
 aether-vault is designed to be invisible to the public internet. By utilizing **Tailscale**, it bypasses ISP firewalls and CGNAT without the need for vulnerable port forwarding. All traffic is end-to-end encrypted via the WireGuard protocol.
+# CD Verified
