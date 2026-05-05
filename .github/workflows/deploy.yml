@@ -8,12 +8,20 @@ jobs:
   deploy:
     runs-on: self-hosted
     
-    steps:
+        steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Clean up existing Docker resources
+        # This clears the way so Terraform has a "clean slate"
+        run: |
+          docker rm -f nginx-proxy-tf aethervault-terraform 2>/dev/null || true
+          docker network rm aether-network-tf 2>/dev/null || true
+        continue-on-error: true
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -var="project_root=/home/anumoymajhi/project/project-ssh-cloud/aether-vault"
+
