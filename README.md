@@ -65,7 +65,7 @@ aether-vault includes a pre-configured backup utility. To automate daily snapsho
 0 2 * * * /home/[your-user]/aether-vault/scripts/backup.sh >> /home/[your-user]/AetherVault_Backups/backup.log 2>&1
 ```
 
-## 📂 Project Structure
+## Project Structure
 ```plaintext
 aether-vault/
 ├── .github/workflows/            # CI Pipeline (ShellCheck & Docker Verify)
@@ -83,4 +83,3 @@ aether-vault/
 
 ## Security & Mesh Networking
 aether-vault is designed to be invisible to the public internet. By utilizing **Tailscale**, it bypasses ISP firewalls and CGNAT without the need for vulnerable port forwarding. All traffic is end-to-end encrypted via the WireGuard protocol.
-# CD Verified
