@@ -27,10 +27,11 @@ jobs:
 
       - name: Clean up existing Docker resources
         run: |
-          # Kill every container in our stack to free up the network
-          docker rm -f nginx-proxy-tf aethervault-terraform cadvisor prometheus grafana loki promtail 2>/dev/null || true
-          # Now the network can be safely removed
-          docker network rm aether-network-tf 2>/dev/null || true
+          # Kill all running containers to free up the network
+          docker rm -f $(docker ps -aq) || true
+          # Force remove the network
+          docker network rm aether-network-tf || true
+          # Clear the ports just in case
+          sudo fuser -k 80/tcp 8080/tcp 3000/tcp || true
         continue-on-error: true
-
 
