@@ -138,3 +138,40 @@ resource "docker_container" "grafana" {
     name = docker_network.aether_network.name
   }
 }
+
+
+# 4. Loki (The Log Database)
+resource "docker_container" "loki" {
+  name  = "loki"
+  image = "grafana/loki:latest"
+  restart = "unless-stopped"
+  
+  # Loki uses a default config inside the image, but we can just start it
+  networks_advanced { name = docker_network.aether_network.name }
+}
+
+# 5. Promtail (The Log Collector)
+resource "docker_container" "promtail" {
+  name  = "promtail"
+  image = "grafana/promtail:latest"
+  restart = "unless-stopped"
+
+  volumes {
+    host_path      = "${var.project_root}/monitoring/promtail.yml"
+    container_path = "/etc/promtail/config.yml"
+  }
+  # This allows Promtail to read your actual Docker container logs
+  volumes {
+    host_path      = "/var/lib/docker/containers"
+    container_path = "/var/lib/docker/containers"
+    read_only      = true
+  }
+  # Needed for log metadata
+  volumes {
+    host_path      = "/var/log"
+    container_path = "/var/log"
+    read_only      = true
+  }
+
+  networks_advanced { name = docker_network.aether_network.name }
+}
