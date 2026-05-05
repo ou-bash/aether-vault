@@ -21,3 +21,14 @@ nginx/
 caddy_data/
 caddy_config/
 AetherVault_Backups/
+
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+.terraform.lock.hcl
+
+# Action runner files
+actions-runner/
