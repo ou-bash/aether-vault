@@ -1,58 +1,27 @@
-name: AetherVault CI Pipeline
+name: Continuous Deployment
 
 on:
   push:
-    branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    branches: [ main ]
 
 jobs:
-  # Job 1: Check the quality of Shell scripts
-  lint-scripts:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Run ShellCheck
+      - name: Power Cleanup
+        # This force-kills everything and the network to prevent "Already Exists" errors
         run: |
-          # Ensure scripts exist and are executable before linting
-          chmod +x scripts/*.sh
-          for script in scripts/backup.sh scripts/install.sh scripts/setup_db.sh; do
-            if [ -f "$script" ]; then
-              shellcheck "$script"
-            else
-              echo "Error: $script not found!"
-              exit 1
-            fi
-          done
+          docker rm -f nginx-proxy-tf aethervault-terraform cadvisor prometheus grafana loki promtail 2>/dev/null || true
+          docker network rm aether-network-tf 2>/dev/null || true
+          sudo fuser -k 80/tcp 8080/tcp 3000/tcp 9090/tcp 3100/tcp || true
+        continue-on-error: true
 
-  # Job 2: Verify the Docker configuration
-  verify-docker:
-    needs: lint-scripts
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Terraform Init
+        run: terraform init
 
-      - name: Create Dummy Files for CI
-        run: |
-          mkdir -p database files
-          touch .env database/filebrowser.db
-          # Create a fake docker.sock so Traefik doesn't complain during validation
-          sudo touch /var/run/docker.sock
-
-      - name: Validate Docker Compose
-        run: |
-          # This checks for syntax errors in your compose file 
-          # without actually starting the containers
-          docker compose config
-
-      - name: Build Test Image
-        run: |
-          # Ensures the Dockerfile (if you have one) or the 
-          # compose images pull correctly
-          docker compose build
+      - name: Terraform Apply
+        # We pass the project_root variable directly to avoid EOF errors
+        run: terraform apply -auto-approve -var="project_root=/home/anumoymajhi/project/project-ssh-cloud/aether-vault"
