@@ -21,11 +21,26 @@ resource "docker_container" "nginx_proxy" {
   name  = "nginx-proxy-tf"
   image = "jc21/nginx-proxy-manager:latest"
   restart = "unless-stopped"
-  ports { internal = 80; external = 80 }
-  ports { internal = 81; external = 81 }
-  ports { internal = 443; external = 443 }
-  volumes { host_path = "${var.project_root}/nginx/data"; container_path = "/data" }
-  volumes { host_path = "${var.project_root}/nginx/letsencrypt"; container_path = "/etc/letsencrypt" }
+  ports { 
+    internal = 80
+    external = 80 
+}
+  ports { 
+    internal = 81
+    external = 81 
+}
+  ports { 
+    internal = 443 
+    external = 443 
+}
+  volumes { 
+    host_path = "${var.project_root}/nginx/data" 
+    container_path = "/data" 
+}
+  volumes { 
+    host_path = "${var.project_root}/nginx/letsencrypt"
+    container_path = "/etc/letsencrypt" 
+}
   networks_advanced { name = docker_network.aether_network.name }
 }
 
@@ -33,9 +48,18 @@ resource "docker_container" "aethervault" {
   name  = "aethervault-terraform"
   image = "filebrowser/filebrowser:latest"
   user  = var.user_mapping
-  ports { internal = 80; external = 8080 }
-  volumes { host_path = "${var.project_root}/files"; container_path = "/srv" }
-  volumes { host_path = "${var.project_root}/database/filebrowser.db"; container_path = "/database/filebrowser.db" }
+  ports { 
+    internal = 80 
+    external = 8080 
+}
+  volumes { 
+    host_path = "${var.project_root}/files" 
+    container_path = "/srv" 
+}
+  volumes { 
+    host_path = "${var.project_root}/database/filebrowser.db" 
+    container_path = "/database/filebrowser.db" 
+}
   networks_advanced { name = docker_network.aether_network.name }
   restart = "unless-stopped"
 }
@@ -45,15 +69,24 @@ resource "docker_container" "aethervault" {
 resource "docker_container" "grafana" {
   name  = "grafana"
   image = "grafana/grafana:latest"
-  ports { internal = 3000; external = 3000 }
-  volumes { host_path = "${var.project_root}/monitoring/grafana_data"; container_path = "/var/lib/grafana" }
+  ports { 
+    internal = 3000 
+    external = 3000 
+}
+  volumes { 
+    host_path = "${var.project_root}/monitoring/grafana_data"
+    container_path = "/var/lib/grafana" 
+}
   networks_advanced { name = docker_network.aether_network.name }
 }
 
 resource "docker_container" "prometheus" {
   name  = "prometheus"
   image = "prom/prometheus:latest"
-  volumes { host_path = "${var.project_root}/monitoring/prometheus.yml"; container_path = "/etc/prometheus/prometheus.yml" }
+  volumes { 
+    host_path = "${var.project_root}/monitoring/prometheus.yml"
+    container_path = "/etc/prometheus/prometheus.yml" 
+}
   networks_advanced { name = docker_network.aether_network.name }
 }
 
@@ -61,10 +94,26 @@ resource "docker_container" "cadvisor" {
   name  = "cadvisor"
   image = "gcr.io/cadvisor/cadvisor:latest"
   privileged = true
-  volumes { host_path = "/"; container_path = "/rootfs"; read_only = true }
-  volumes { host_path = "/var/run"; container_path = "/var/run"; read_only = true }
-  volumes { host_path = "/sys"; container_path = "/sys"; read_only = true }
-  volumes { host_path = "/var/lib/docker"; container_path = "/var/lib/docker"; read_only = true }
+  volumes { 
+    host_path = "/" 
+    container_path = "/rootfs"
+    read_only = true 
+}
+  volumes { 
+    host_path = "/var/run"
+    container_path = "/var/run" 
+    read_only = true 
+}
+  volumes { 
+    host_path = "/sys" 
+    container_path = "/sys" 
+    read_only = true 
+}
+  volumes { 
+    host_path = "/var/lib/docker" 
+    container_path = "/var/lib/docker" 
+    read_only = true 
+}
   networks_advanced { name = docker_network.aether_network.name }
 }
 
@@ -78,7 +127,14 @@ resource "docker_container" "promtail" {
   name  = "promtail"
   image = "grafana/promtail:latest"
   user  = "root"
-  volumes { host_path = "${var.project_root}/monitoring/promtail.yml"; container_path = "/etc/promtail/config.yml" }
-  volumes { host_path = "/var/lib/docker/containers"; container_path = "/var/lib/docker/containers"; read_only = true }
+  volumes { 
+    host_path = "${var.project_root}/monitoring/promtail.yml" 
+    container_path = "/etc/promtail/config.yml" 
+}
+  volumes { 
+    host_path = "/var/lib/docker/containers" 
+    container_path = "/var/lib/docker/containers" 
+    read_only = true 
+}
   networks_advanced { name = docker_network.aether_network.name }
 }
