@@ -29,6 +29,12 @@ AetherVault_Backups/
 *.tfvars
 *.tfvars.json
 .terraform.lock.hcl
+monitoring/grafana_data/
+nginx/data/
+nginx/letsencrypt/
+*.db
+terraform.tfstate*
+
 
 # Action runner files
 actions-runner/

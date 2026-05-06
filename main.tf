@@ -13,6 +13,7 @@ provider "docker" {
 
 resource "docker_network" "aether_network" {
   name = "aether-network-tf"
+  check_duplicate = true
 }
 
 # --- PROXY & APP ---

@@ -12,26 +12,26 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Clean up existing Docker resources
-        # This clears the way so Terraform has a "clean slate"
+      - name: Power Cleanup
+        # This MUST be the first thing we do to free up ports and networks
         run: |
-          docker rm -f nginx-proxy-tf aethervault-terraform 2>/dev/null || true
+          # 1. Kill all containers
+          docker rm -f $(docker ps -aq) 2>/dev/null || true
+          
+          # 2. Force remove the network by name
           docker network rm aether-network-tf 2>/dev/null || true
+          
+          # 3. Prune any stuck networks
+          docker network prune -f
+          
+          # 4. Kill ports
+          sudo fuser -k 80/tcp 8080/tcp 3000/tcp 9090/tcp 3100/tcp || true
+          sleep 5
         continue-on-error: true
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Apply
+        # Make sure the path ends correctly (not with '>')
         run: terraform apply -auto-approve -var="project_root=/home/anumoymajhi/project/project-ssh-cloud/aether-vault"
-
-      - name: Clean up existing Docker resources
-        run: |
-          # Kill all running containers to free up the network
-          docker rm -f $(docker ps -aq) || true
-          # Force remove the network
-          docker network rm aether-network-tf || true
-          # Clear the ports just in case
-          sudo fuser -k 80/tcp 8080/tcp 3000/tcp || true
-        continue-on-error: true
-
