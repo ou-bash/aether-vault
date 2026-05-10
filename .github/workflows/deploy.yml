@@ -4,6 +4,11 @@ on:
   push:
     branches: [ main ]
 
+# ADD THIS SECTION TO PREVENT QUEUING
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: self-hosted
@@ -13,18 +18,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Power Cleanup
-        # This MUST be the first thing we do to free up ports and networks
         run: |
-          # 1. Kill all containers
           docker rm -f $(docker ps -aq) 2>/dev/null || true
-          
-          # 2. Force remove the network by name
           docker network rm aether-network-tf 2>/dev/null || true
-          
-          # 3. Prune any stuck networks
           docker network prune -f
-          
-          # 4. Kill ports
           sudo fuser -k 80/tcp 8080/tcp 3000/tcp 9090/tcp 3100/tcp || true
           sleep 5
         continue-on-error: true
@@ -33,5 +30,4 @@ jobs:
         run: terraform init
 
       - name: Terraform Apply
-        # Make sure the path ends correctly (not with '>')
         run: terraform apply -auto-approve -var="project_root=/home/anumoymajhi/project/project-ssh-cloud/aether-vault"
