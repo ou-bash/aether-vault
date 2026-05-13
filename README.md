@@ -59,7 +59,7 @@ sudo tcpdump -i tailscale0 port 8080
 
 
 ##  Maintenance & Backups
-aether-vault includes a pre-configured backup utility. To automate daily snapshots at 2:00 AM, add the following to your `crontab -e`:
+aether-vault includes a pre-configured backup utility. To automate daily snapshots at 2:00 AM everyday, add the following to your `crontab -e`:
 
 ```bash
 0 2 * * * /home/[your-user]/aether-vault/scripts/backup.sh >> /home/[your-user]/AetherVault_Backups/backup.log 2>&1
